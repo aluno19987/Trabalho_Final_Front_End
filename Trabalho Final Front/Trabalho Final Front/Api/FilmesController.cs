@@ -104,6 +104,28 @@ namespace Trabalho_Final_Front.Api
             return Ok(resultado);
         }
 
+        // GET: api/Filmes/5/Reviews
+        [HttpGet, Route("{id}/Reviews")]
+        [ResponseType(typeof(Filmes))]
+        public IHttpActionResult GetFilmeReviews(int id)
+        {
+            Filmes filmes = db.Filmes.Find(id);
+            if (filmes == null)
+            {
+                return NotFound();
+            }
+            var resultado = filmes.ListaReviews
+                .Select(reviews => new
+                {
+                    reviews.IdReview,
+                    reviews.TituloReview,
+                    reviews.NStars,
+                    reviews.Review,
+                    reviews.Data
+                }).ToList();
+            return Ok(resultado);
+        }
+
         // GET: api/Filmes/5/Imagens
         [HttpGet, Route("{id}/Imagens")]
         [ResponseType(typeof(Filmes))]

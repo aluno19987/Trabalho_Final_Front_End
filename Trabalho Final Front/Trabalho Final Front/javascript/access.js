@@ -68,6 +68,34 @@ function getFilmeImagens(idFilme) {
         });
 }
 
+function getFilmePersonagens(idFilme) {
+    var url = "/api/Filmes/";
+    url += idFilme;
+    url += "/Personagens";
+    return fetch(url, { headers: { Accept: 'application/json' } })
+        .then(function (resposta) {
+            if (resposta.status === 200) {
+                return resposta.json();
+            } else {
+                return Promise.reject(new Error("Erro ao obter Personagens do filme"));
+            }
+        });
+}
+
+function getFilmeReviews(idFilme) {
+    var url = "/api/Filmes/";
+    url += idFilme;
+    url += "/Reviews";
+    return fetch(url, { headers: { Accept: 'application/json' } })
+        .then(function (resposta) {
+            if (resposta.status === 200) {
+                return resposta.json();
+            } else {
+                return Promise.reject(new Error("Erro ao obter Reviews do filme"));
+            }
+        });
+}
+
 function getCategorias() {
     var url = "/api/Categorias";
     return fetch(url, { headers: { Accept: 'application/json' } })

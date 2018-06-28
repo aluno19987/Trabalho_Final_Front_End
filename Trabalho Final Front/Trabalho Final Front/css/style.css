@@ -1,4 +1,15 @@
 ﻿
+hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 100%;
+    background-color: black;
+}
+
+.clear {
+    clear: both;
+}
 
 .container {
     width: 100rem;
@@ -19,8 +30,11 @@
     width: 100%;
 }
 
-#filme, #multimedia, #reviews{
+#filme, #multimedia, #reviews, #personagens{
     display:none;
 }
 
-
+#listaPersonagens {
+    height: 500px;
+    overflow-y: auto;
+}
