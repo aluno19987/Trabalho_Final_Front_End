@@ -104,6 +104,25 @@ namespace Trabalho_Final_Front.Api
             return Ok(resultado);
         }
 
+        // GET: api/Filmes/5/Imagens
+        [HttpGet, Route("{id}/Imagens")]
+        [ResponseType(typeof(Filmes))]
+        public IHttpActionResult GetFilmeImagens(int id)
+        {
+            Filmes filmes = db.Filmes.Find(id);
+            if (filmes == null)
+            {
+                return NotFound();
+            }
+            var resultado = filmes.ListaImagens
+                .Select(personagens => new
+                {
+                    personagens.IdImg,
+                    personagens.Nome
+                }).ToList();
+            return Ok(resultado);
+        }
+
 
         // PUT: api/Filmes/5
         [ResponseType(typeof(void))]

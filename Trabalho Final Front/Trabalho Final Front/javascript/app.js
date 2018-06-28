@@ -1,11 +1,81 @@
 ﻿document.addEventListener('DOMContentLoaded', function main() {
-    ecraFilme(1);
+    topbar();
+    ecraFilmes();
 });
+
+async function topbar() {
+    var FilmeContainer = document.createElement('ul');
+    FilmeContainer.classList.add("nav");
+    FilmeContainer.classList.add("navbar-nav");
+
+    var Filme = document.createElement('li');
+    Filme.addEventListener("click", voltaInicio);
+    Filme.classList.add("nav-link");
+    Filme.textContent = "Filmes";
+
+    FilmeContainer.appendChild(Filme);
+
+    var CategoriasContainer = document.createElement('li');
+    CategoriasContainer.classList.add("nav-item");
+    CategoriasContainer.classList.add("dropdown");
+
+    var Categorias = document.createElement('a');
+    Categorias.classList.add("nav-link");
+    Categorias.classList.add("dropdown-toggle");
+    Categorias.setAttribute("href", "#");
+    Categorias.setAttribute("data-toggle", "dropdown");
+    Categorias.setAttribute("data-target", "dropdown_target");
+    Categorias.textContent = "Categorias";
+
+    var spanCategorias = document.createElement('span');
+    spanCategorias.classList.add("caret");
+
+    Categorias.appendChild(spanCategorias);
+
+    var lista = document.createElement('div');
+    lista.classList.add("dropdown-menu");
+    lista.setAttribute("aria-labelledby", "dropdown_target")
+    lista.setAttribute("aria-labelledby", "dropdownMenuButton")
+    lista.setAttribute("aria-labelledby", "dropdownMenuButton")
+
+    var categorias = await getCategorias();
+
+    for (var i = 0; i < categorias.length; i++) {
+        var categoriaContainer = document.createElement('li');
+        categoriaContainer.setAttribute("id", categorias[i].IdCategoria)
+        categoriaContainer.classList.add("dropdown-item");
+        categoriaContainer.textContent = categorias[i].Nome;
+        lista.appendChild(categoriaContainer);
+
+    }
+    
+    var voltar = document.createElement('li');
+    voltar.textContent = "Voltar";
+    voltar.classList.add("nav-link");
+    voltar.setAttribute("id", "voltar");
+
+    CategoriasContainer.appendChild(lista);
+    CategoriasContainer.appendChild(Categorias);
+    
+    FilmeContainer.appendChild(CategoriasContainer);
+    FilmeContainer.appendChild(voltar);
+    document.querySelector("#collapse_target").appendChild(FilmeContainer);
+}
+
+function ecraFilmes() {
+    return getFilmes()
+        .then(function (filmes) {
+            mostraFilmes(filmes);
+        })
+        .catch(function (erro) {
+            console.error(erro);
+        });
+}
 
 function mostraFilmes(filmes) {
     for (var i = 0; i < filmes.length; i++) {
         var Container = document.createElement('div');
-        Container.classList.add("col-sm-6");
+        Container.classList.add("col-sm-12");
         Container.classList.add("col-md-6");
         Container.classList.add("col-lg-4");
         Container.setAttribute("style", "width: 35rem;");
@@ -26,22 +96,22 @@ function mostraFilmes(filmes) {
         nomeContainer.textContent = filme.Nome;
         nomeContainer.setAttribute("class", "card-title");
         filmeContainer.appendChild(nomeContainer);
+        filmeContainer.addEventListener("click", function () { escolheFilme(this.id); });
 
         Container.appendChild(filmeContainer);
         document.querySelector("#filmes").appendChild(Container);
     }
 }
 
-function ecraFilmes() {
-    return getFilmes()
-        .then(function (filmes) {
-            mostraFilmes(filmes);
+function ecraFilme(id) {
+    return getFilme(id)
+        .then(function (filme) {
+            mostraFilme(filme);
         })
         .catch(function (erro) {
             console.error(erro);
         });
 }
-
 
 async function mostraFilme(filme) {
 
@@ -51,22 +121,22 @@ async function mostraFilme(filme) {
 
 
     var imageContainer = document.createElement('div');
-    imageContainer.classList.add("col-sm-6");
-    imageContainer.classList.add("col-md-6");
-    imageContainer.classList.add("col-lg-3");
+    imageContainer.classList.add("col-sm-5");
+    imageContainer.classList.add("col-md-5");
+    imageContainer.classList.add("col-lg-4");
     src = "../ImagensCartaz/" + filme.Cartaz;
     var imagem = document.createElement('img');
     imagem.classList.add("img-thumbnail");
     imagem.setAttribute("src", src);
-    imagem.setAttribute("style", "border:0px");
+    imagem.setAttribute("style", "border:0px; margin-left:16px");
 
     imageContainer.appendChild(imagem);
     filmeContainer.appendChild(imageContainer);
     
     var infoContainer = document.createElement("div");
-    infoContainer.classList.add("col-sm-6");
-    infoContainer.classList.add("col-md-6");
-    infoContainer.classList.add("col-lg-4");
+    infoContainer.classList.add("col-sm-7");
+    infoContainer.classList.add("col-md-7");
+    infoContainer.classList.add("col-lg-8");
     infoContainer.setAttribute("id", "info");
 
     var tituloContainer = document.createElement("h3");
@@ -94,40 +164,102 @@ async function mostraFilme(filme) {
     categoriasContainer.textContent = "Categorias: ";
     for (var i = 0; i < categorias.length; i++) {
         categoriasContainer.textContent += categorias[i].Nome;
-        if (i != categorias.length - 1) {
-            categoriasContainer.textContent += ", "
+        if (i !== categorias.length - 1) {
+            categoriasContainer.textContent += ", ";
         } 
     }
     infoContainer.appendChild(categoriasContainer);
     filmeContainer.appendChild(infoContainer);
 
     var trailerContainer = document.createElement('div');
-    trailerContainer.classList.add("embed-responsive");
-    trailerContainer.classList.add("embed-responsive-16by9");
-    trailerContainer.classList.add("col-sm-12");
-    trailerContainer.classList.add("col-md-12");
-    trailerContainer.classList.add("col-lg-5");
-    var trailer = document.createElement("iframe");
-    var src = "https://www.youtube.com/embed/" + filme.Trailer +"?rel=0";
+    trailerContainer.setAttribute("style", " height:250px; width:370px;");
+    var trailer = document.createElement("img");
+    var src = "//img.youtube.com/vi/" + filme.Trailer + "/hqdefault.jpg";
     trailer.setAttribute("src", src);
-    trailer.setAttribute("style", "border:0px;");
-    trailer.setAttribute("allowfullscreen", "allowfullscreen");
-    trailer.classList.add("embed-responsive-item");
+    trailer.setAttribute("style", "height: 250px; width: 370px;");
+    trailer.setAttribute("id", filme.Trailer);
+    trailer.addEventListener("click", function () {
+        modal(this.id, "video");
+    }, false);
+
+    trailer.setAttribute("data-toggle", "modal");
+    trailer.setAttribute("data-target", ".bd-example-modal-lg");
     trailerContainer.appendChild(trailer);
-    filmeContainer.appendChild(trailerContainer);
-    
 
-
+    document.querySelector("#trailer").appendChild(trailerContainer);
     document.querySelector("#filme").appendChild(filmeContainer);
 }
 
-
-function ecraFilme(id) {
-    return getFilme(id)
-        .then(function (filme) {
-            mostraFilme(filme);
+function ecraFilmeImagens(id) {
+    return getFilmeImagens(id)
+        .then(function (imagens) {
+            mostraFilmeImagens(imagens);
         })
         .catch(function (erro) {
             console.error(erro);
         });
+}
+
+function mostraFilmeImagens(imagens) {
+    for (var i = 0; i < imagens.length; i++) {
+        var src = "/Imagens/"+imagens[i].Nome;
+        var imagemContainer = document.createElement('img');
+        imagemContainer.setAttribute("src", src);
+        imagemContainer.classList.add("imagens");
+        imagemContainer.classList.add("col-lg-7");
+        imagemContainer.classList.add("col-md-7");
+        imagemContainer.classList.add("col-sm-7");
+        imagemContainer.addEventListener("click", function () {
+            modal(this.src, "imagem");
+        }, false);
+        imagemContainer.setAttribute("data-toggle", "modal");
+        imagemContainer.setAttribute("data-target", ".bd-example-modal-lg");
+        document.querySelector("#imagens").appendChild(imagemContainer);
+    }
+}
+
+function ecraFilmePersonagens(id) {
+    return getFilmeImagens(id)
+        .then(function (personagens) {
+            mostraFilmePersonagens(personagens);
+        })
+        .catch(function (erro) {
+            console.error(erro);
+        });
+}
+
+function modal(src, tipo) {
+    if (tipo == "video") {
+        var novaSrc = "https://www.youtube.com/embed/" + src;
+        document.querySelector("#modalTrailer").setAttribute("src", novaSrc)
+        document.querySelector("#modalTrailer").setAttribute("style", "display:block; height: 800px; width: 1000px;")
+        document.querySelector("#modalImage").setAttribute("src", "")
+        document.querySelector("#modalImage").setAttribute("style", "display:none")
+    } else {
+        document.querySelector("#modalTrailer").setAttribute("src", "")
+        document.querySelector("#modalTrailer").setAttribute("style", "display:none")
+        document.querySelector("#modalImage").setAttribute("src", src)
+        document.querySelector("#modalImage").setAttribute("style", "display:block;  height: 800px; width: 1000px; object-fit:cover;")
+    }
+}
+
+function escolheFilme(id) {
+
+    document.querySelector("#filme").textContent = "";
+    document.querySelector("#imagens").textContent = "";
+    document.querySelector("#trailer").textContent = "";
+    document.querySelector("#filmes").setAttribute("style", "display:none");
+    document.querySelector("#filme").setAttribute("style", "display:block");
+    document.querySelector("#multimedia").setAttribute("style", "display:flex");
+    ecraFilme(id);
+    ecraFilmeImagens(id);
+}
+
+function voltaInicio() {
+    document.querySelector("#filmes").textContent = "";
+    document.querySelector("#filmes").setAttribute("style", "display:flex");
+    document.querySelector("#filme").setAttribute("style", "display:none");
+    document.querySelector("#multimedia").setAttribute("style", "display:none");
+    ecraFilmes();
+    
 }

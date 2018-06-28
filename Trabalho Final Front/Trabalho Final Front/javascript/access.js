@@ -52,3 +52,30 @@ function getFilmePersonagens(idFilme) {
             }
         });
 }
+
+
+function getFilmeImagens(idFilme) {
+    var url = "/api/Filmes/";
+    url += idFilme;
+    url += "/Imagens";
+    return fetch(url, { headers: { Accept: 'application/json' } })
+        .then(function (resposta) {
+            if (resposta.status === 200) {
+                return resposta.json();
+            } else {
+                return Promise.reject(new Error("Erro ao obter Imagens do filme"));
+            }
+        });
+}
+
+function getCategorias() {
+    var url = "/api/Categorias";
+    return fetch(url, { headers: { Accept: 'application/json' } })
+        .then(function (resposta) {
+            if (resposta.status === 200) {
+                return resposta.json();
+            } else {
+                return Promise.reject(new Error("Erro ao obter Categorias"));
+            }
+        });
+}

@@ -17,9 +17,18 @@ namespace Trabalho_Final_Front.Api
         private FilmesDb db = new FilmesDb();
 
         // GET: api/Categorias
-        public IQueryable<Categorias> GetCategorias()
+        public IHttpActionResult GetCategorias()
         {
-            return db.Categorias;
+            var resultado = db.Categorias
+                .Select(categorias => new
+                {
+                    categorias.IdCategoria,
+                    categorias.Nome
+                })
+                .ToList();
+
+
+            return Ok(resultado);
         }
 
         // GET: api/Categorias/5

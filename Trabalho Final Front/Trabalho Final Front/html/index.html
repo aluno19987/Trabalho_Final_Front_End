@@ -2,43 +2,54 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>CineHome</title>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <script src="/javascript/access.js"></script>
+    <script src="/javascript/app.js"></script>
 </head>
 <body>
-    <div id="topBar"></div>
-    <div class="wrapper">
-        <nav id="sidebar" style="background-color:red; display:none;">
-            <div class="sidebar-header">
-                <h3>Categorias</h3>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <h2 class="navbar-text">CineHome</h2>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#collapse_target">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapse_target"></div>
+    </nav>
+    <div id="content">
+        <div class="container">
+            <div class="row" id="filmes">
             </div>
-        </nav>
-        <div id="content">
-            <div class="container">
-                <div class="row" id="filmes">
-                </div>
-                <div class="row" id="filme">
-                </div>
-                <br />
-                <div class="row">
-                    
-                    <div class="embed-responsive embed-responsive-16by9" id="trailer">
+            <div class="row" id="filme">
+            </div>
+            <br />
+            <div class="row flex-row flex-nowrap" id="multimedia" style="height:260px">
+                <div class="col-lg-4" id="trailer" style="margin:5px; height:260px;"></div>
+                <div class="col-lg-8 row flex-row flex-nowrap" id="imagens" style="overflow-x:scroll;overflow-y:hidden; margin:5px; border-left:10px; display:flex;height:260px; white-space:nowrap" ></div>
+            </div>
+            <div class="row" id="personagens"></div>
+            <div class="row" id="reviews">
+            </div>
+            <div class="row">
+                <div id="myModal" class="modal fade bd-example-modal-lg" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="max-height:max-content; max-width:max-content">
+                            <div class="modal-body" >
+                                <img id="modalImage" src=""/>
+                                <iframe id="modalTrailer" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row" id="imagens">
-                </div>
-                <div class="row" id="reviews">
                 </div>
             </div>
         </div>
     </div>
-    <script src="/javascript/access.js"></script>
-    <script src="/javascript/app.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+ 
+
+        
 </body>
 </html>

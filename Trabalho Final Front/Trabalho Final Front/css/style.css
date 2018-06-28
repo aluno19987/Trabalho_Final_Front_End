@@ -1,20 +1,26 @@
-﻿body {
-}
+﻿
 
 .container {
     width: 100rem;
 }
 
-.wrapper {
-    display: flex;
-    align-items: stretch;
+.modal-dialog {
+    position: relative;
+    display: table;
 }
 
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
+.imagens {
+    height: 240px;
+    width: 400px;
+    object-fit: cover;
 }
 
 #content {
     width: 100%;
 }
+
+#filme, #multimedia, #reviews{
+    display:none;
+}
+
+
