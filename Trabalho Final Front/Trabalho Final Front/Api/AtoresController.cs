@@ -32,6 +32,14 @@ namespace Trabalho_Final_Front.Api
                 return NotFound();
             }
 
+            var resultado = new
+            {
+                atores.IdAtor,
+                atores.Imagem,
+                atores.Nome,
+                atores.DataNascimento
+            };
+
             return Ok(atores);
         }
 

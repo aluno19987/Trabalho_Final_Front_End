@@ -107,3 +107,41 @@ function getCategorias() {
             }
         });
 }
+
+function getPersonagem(idPersonagem) {
+    var url = "/api/Personagens/" + idPersonagem;
+    return fetch(url, { headers: { Accept: 'application/json' } })
+        .then(function (resposta) {
+            if (resposta.status === 200) {
+                return resposta.json();
+            } else {
+                return Promise.reject(new Error("Erro ao obter personagem"));
+            }
+        });
+}
+
+function getAtor(idAtor) {
+    var url = "/api/Atores/" + idAtor;
+    return fetch(url, { headers: { Accept: 'application/json' } })
+        .then(function (resposta) {
+            if (resposta.status === 200) {
+                return resposta.json();
+            } else {
+                return Promise.reject(new Error("Erro ao obter ator"));
+            }
+        });
+}
+
+function getCategoriasFilme(idCategoria) {
+    var url = "/api/Categorias/";
+    url += idCategoria;
+    url+= "/Filmes"
+    return fetch(url, { headers: { Accept: 'application/json' } })
+        .then(function (resposta) {
+            if (resposta.status === 200) {
+                return resposta.json();
+            } else {
+                return Promise.reject(new Error("Erro ao obter filmes da Categoria"));
+            }
+        });
+}

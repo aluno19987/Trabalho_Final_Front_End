@@ -12,6 +12,8 @@ using Trabalho_Final_Front.Models;
 
 namespace Trabalho_Final_Front.Api
 {
+
+    [RoutePrefix("api/categorias")]
     public class CategoriasController : ApiController
     {
         private FilmesDb db = new FilmesDb();
@@ -42,6 +44,31 @@ namespace Trabalho_Final_Front.Api
             }
 
             return Ok(categorias);
+        }
+
+        // GET: api/Categorias/5/Filmes
+        [HttpGet, Route("{id}/Filmes")]
+        [ResponseType(typeof(Filmes))]
+        public IHttpActionResult GetFilmeReviews(int id)
+        {
+            Categorias categorias = db.Categorias.Find(id);
+            if (categorias == null)
+            {
+                return NotFound();
+            }
+            var resultado = categorias.ListaFilmes
+                .Select(filmes => new
+                {
+                    filmes.IdFilme,
+                    filmes.Nome,
+                    filmes.DataLancamento,
+                    filmes.Realizador,
+                    filmes.Companhia,
+                    filmes.Duracao,
+                    filmes.Trailer,
+                    filmes.Cartaz
+                }).ToList();
+            return Ok(resultado);
         }
 
         // PUT: api/Categorias/5

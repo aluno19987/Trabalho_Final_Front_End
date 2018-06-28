@@ -12,6 +12,7 @@ using Trabalho_Final_Front.Models;
 
 namespace Trabalho_Final_Front.Api
 {
+    [RoutePrefix("api/Personagens")]
     public class PersonagensController : ApiController
     {
         private FilmesDb db = new FilmesDb();
@@ -31,8 +32,16 @@ namespace Trabalho_Final_Front.Api
             {
                 return NotFound();
             }
+            
+            var resultado = new
+            {
+                personagens.IdPersonagem,
+                personagens.Nome,
+                personagens.Imagem,
+                personagens.AtorFK
+            };
 
-            return Ok(personagens);
+            return Ok(resultado);
         }
 
         // PUT: api/Personagens/5

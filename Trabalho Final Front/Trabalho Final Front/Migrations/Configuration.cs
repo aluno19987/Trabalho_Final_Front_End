@@ -293,7 +293,7 @@ namespace Trabalho_Final_Front.Migrations
                 new Personagens {IdPersonagem=40,Nome="Angel Dust",Imagem="img_pers_40.jpg",FilmeFK=2, AtorFK=40},
                 new Personagens {IdPersonagem=41,Nome="Elisa Esposito",Imagem="img_pers_41.jpg",FilmeFK=3, AtorFK=41},
                 new Personagens {IdPersonagem=42,Nome="Richard Strickland",Imagem="img_pers_42.jpg",FilmeFK=3, AtorFK=42},
-                new Personagens {IdPersonagem=43,Nome="Giles",Imagem="img_pers_43",FilmeFK=3, AtorFK=43},
+                new Personagens {IdPersonagem=43,Nome="Giles",Imagem="img_pers_43.jpg",FilmeFK=3, AtorFK=43},
                 new Personagens {IdPersonagem=44,Nome="Zelda Fuller",Imagem="img_pers_44.jpg",FilmeFK=3, AtorFK=44},
                 new Personagens {IdPersonagem=45,Nome="Dr. Robert Hoffstetler",Imagem="img_pers_45.jpg",FilmeFK=3, AtorFK=45},
                 new Personagens {IdPersonagem=46,Nome="Amphibian Man",Imagem="img_pers_46.jpg",FilmeFK=3, AtorFK=46},

@@ -40,27 +40,26 @@ async function topbar() {
 
     var categorias = await getCategorias();
 
-    for (var i = 0; i < categorias.length; i++) {
+    for (let i = 0; i < categorias.length; i++) {
         var categoriaContainer = document.createElement('li');
-        categoriaContainer.setAttribute("id", categorias[i].IdCategoria)
-        categoriaContainer.classList.add("dropdown-item");
-        categoriaContainer.textContent = categorias[i].Nome;
+        var categoria = document.createElement('a');
+        categoria.setAttribute("id", categorias[i].IdCategoria)
+        categoria.classList.add("dropdown-item");
+        categoria.textContent = categorias[i].Nome;
+        categoria.addEventListener("click", function () {
+            ecraCategoriasFilmes(this.id);
+        });
+        categoriaContainer.appendChild(categoria);
         lista.appendChild(categoriaContainer);
-
     }
-    
-    var voltar = document.createElement('li');
-    voltar.textContent = "Voltar";
-    voltar.classList.add("nav-link");
-    voltar.setAttribute("id", "voltar");
 
     CategoriasContainer.appendChild(lista);
     CategoriasContainer.appendChild(Categorias);
     
     FilmeContainer.appendChild(CategoriasContainer);
-    FilmeContainer.appendChild(voltar);
     document.querySelector("#collapse_target").appendChild(FilmeContainer);
 }
+
 
 function ecraFilmes() {
     return getFilmes()
@@ -71,6 +70,7 @@ function ecraFilmes() {
             console.error(erro);
         });
 }
+
 
 function mostraFilmes(filmes) {
     for (var i = 0; i < filmes.length; i++) {
@@ -103,6 +103,30 @@ function mostraFilmes(filmes) {
     }
 }
 
+function ecraCategoriasFilmes(idFilme) {
+    return getCategoriasFilme(idFilme)
+        .then(function (filmes) {
+            mostraCategoriasFilmes(filmes);
+        })
+        .catch(function (erro) {
+            console.error(erro);
+        });
+}
+
+function mostraCategoriasFilmes(filmes) {
+    document.querySelector("#filmes").textContent = "";
+    document.querySelector("#imagens").textContent = "";
+    document.querySelector("#trailer").textContent = "";
+    document.querySelector("#listaPersonagens").textContent = "";
+    document.querySelector("#reviews").textContent = "";
+    document.querySelector("#filmes").setAttribute("style", "display:flex");
+    document.querySelector("#filme").setAttribute("style", "display:none");
+    document.querySelector("#multimedia").setAttribute("style", "display:none");
+    document.querySelector("#personagens").setAttribute("style", "display:none");
+    document.querySelector("#reviews").setAttribute("style", "display:none");
+    mostraFilmes(filmes);
+}
+
 function ecraFilme(id) {
     return getFilme(id)
         .then(function (filme) {
@@ -112,6 +136,7 @@ function ecraFilme(id) {
             console.error(erro);
         });
 }
+
 
 async function mostraFilme(filme) {
 
@@ -246,14 +271,19 @@ function mostraFilmePersonagens(personagens) {
         personagemContainer.setAttribute("id", personagem.IdPersonagem);
 
         image = "../ImagensPersonagens/" + personagem.Imagem;
-        console.log(image);
         var imageContainer = document.createElement('img');
         imageContainer.classList.add("card-img-top");
         imageContainer.setAttribute("style", "width:15rem; height: 240px; object-fit:cover;");
+        imageContainer.setAttribute("id", personagem.IdPersonagem);
         imageContainer.setAttribute("src", image);
+        imageContainer.setAttribute("data-toggle", "modal");
+        imageContainer.setAttribute("data-target", ".modalPersonagensAtores");
+        imageContainer.addEventListener("click", function () {
+            ecraPersonagemAtor(this.id);
+        }, false);
         personagemContainer.appendChild(imageContainer);
 
-        var nomeContainer = document.createElement('h2');
+        var nomeContainer = document.createElement('h3');
         nomeContainer.textContent = personagem.Nome;
         nomeContainer.setAttribute("class", "card-title");
         personagemContainer.appendChild(nomeContainer);
@@ -302,6 +332,55 @@ function mostraFilmeReviews(reviews) {
     }
 }
 
+function ecraPersonagemAtor(IdPersonagem) {
+    return getPersonagem(IdPersonagem)
+        .then(function (personagem) {
+            modalPersonagemAtor(personagem);
+        })
+        .catch(function (erro) {
+            console.error(erro);
+        });
+}
+
+async function modalPersonagemAtor(personagem) {
+    var ator = await getAtor(personagem.AtorFK);
+    document.querySelector("#modalAtor").textContent = "";
+    document.querySelector("#modalPersonagem").textContent = "";
+
+
+    var atorContainer = document.createElement('div');
+    var imagemAtor = "../ImagensAtores/" + ator.Imagem;
+    var atorImagemContainer = document.createElement('img');
+    atorImagemContainer.setAttribute("src", imagemAtor);
+    atorImagemContainer.setAttribute("style", "height: 400px; width: 300px; object - fit: cover;");
+
+    //atorImagemContainer.classList.add("imagensModal2");
+    atorImagemContainer.classList.add("img-fluid");
+    atorContainer.appendChild(atorImagemContainer);
+    var atorNomeContainer = document.createElement('h3');
+    atorNomeContainer.textContent = ator.Nome;
+    atorContainer.appendChild(atorNomeContainer);
+
+
+    var personagemContainer = document.createElement('div');
+    var imagemPersonagem = "../ImagensPersonagens/" + personagem.Imagem;
+    var personagemImagemContainer = document.createElement('img');
+    personagemImagemContainer.setAttribute("src", imagemPersonagem);
+    personagemImagemContainer.setAttribute("style", "height: 400px; width: 300px; object-fit: cover;");
+
+    //personagemContainer.classList.add("imagensModal2");
+    personagemContainer.classList.add("img-fluid");
+    personagemContainer.appendChild(personagemImagemContainer);
+    var personagemNomeContainer = document.createElement('h3');
+    personagemNomeContainer.textContent = personagem.Nome;
+    personagemContainer.appendChild(personagemNomeContainer);
+
+
+
+    document.querySelector("#modalAtor").appendChild(atorContainer);
+    document.querySelector("#modalPersonagem").appendChild(personagemContainer);
+}
+
 function modal(src, tipo) {
     if (tipo == "video") {
         var novaSrc = "https://www.youtube.com/embed/" + src;
@@ -344,5 +423,4 @@ function voltaInicio() {
     document.querySelector("#personagens").setAttribute("style", "display:none");
     document.querySelector("#reviews").setAttribute("style", "display:none");
     ecraFilmes();
-    
 }
