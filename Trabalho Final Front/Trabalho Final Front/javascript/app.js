@@ -15,7 +15,7 @@ async function topbar() {
     var Filme = document.createElement('li');
     Filme.addEventListener("click", voltaInicio);
     Filme.classList.add("nav-link");
-    Filme.textContent = "Filmes";
+    Filme.textContent = "Films";
     FilmeContainer.appendChild(Filme);
 
     //link que mostra a dropdow com a lista de categorias
@@ -28,7 +28,7 @@ async function topbar() {
     Categorias.setAttribute("href", "#");
     Categorias.setAttribute("data-toggle", "dropdown");
     Categorias.setAttribute("data-target", "dropdown_target");
-    Categorias.textContent = "Categorias";
+    Categorias.textContent = "Categories";
 
     //adiciona ao link das categorias uma seta para muotrar que é uma dropbox
     var spanCategorias = document.createElement('span');
@@ -190,30 +190,30 @@ async function mostraFilme(filme) {
 
     //criação de um p com a data de lançamento
     var dataContainer = document.createElement("p");
-    dataContainer.textContent = "Data de lançamento: "+ filme.DataLancamento.substring(0,10);
+    dataContainer.textContent = "Launch date: "+ filme.DataLancamento.substring(0,10);
     infoContainer.appendChild(dataContainer);
 
     //criação de um p com o nome de o realizador
     var realizadorContainer = document.createElement("p");
-    realizadorContainer.textContent = "Companhia: " + filme.Realizador;
+    realizadorContainer.textContent = "Company: " + filme.Realizador;
     infoContainer.appendChild(realizadorContainer);
 
     //criação de um p com o nome da companhia 
     var companhiaContainer = document.createElement("p");
-    companhiaContainer.textContent = "Realizador: " + filme.Companhia;
+    companhiaContainer.textContent = "Director: " + filme.Companhia;
     infoContainer.appendChild(companhiaContainer);
 
     //criação de um p com duração do filme
     var duracaoContainer = document.createElement("p");
     var duracao = filme.Duracao;
-    duracaoContainer.textContent = "Duração: " + Math.floor(duracao/60) + "h" + duracao % 60 + "min";
+    duracaoContainer.textContent = "Duration: " + Math.floor(duracao/60) + "h" + duracao % 60 + "min";
     infoContainer.appendChild(duracaoContainer);
 
     //obtem os dados das categorias do filme
     var categorias = await getFilmeCategorias(filme.IdFilme);
     //criação de um p com as deferentes categorias
     var categoriasContainer = document.createElement("p");
-    categoriasContainer.textContent = "Categorias: ";
+    categoriasContainer.textContent = "Categories: ";
     for (var i = 0; i < categorias.length; i++) {
         categoriasContainer.textContent += categorias[i].Nome;
         if (i !== categorias.length - 1) {
@@ -381,7 +381,7 @@ function mostraFilmeReviews(reviews) {
 
         //criação de um p para a classificação da pessoa que criou a review
         var pontuaçãoContainer = document.createElement('p');
-        pontuaçãoContainer.textContent ="Classificação: "+ review.NStars + "/10";
+        pontuaçãoContainer.textContent = "Classification: "+ review.NStars + "/10";
         Container.appendChild(pontuaçãoContainer);
 
         //criação de um p para o corpo da review
