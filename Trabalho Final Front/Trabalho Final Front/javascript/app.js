@@ -39,8 +39,6 @@ async function topbar() {
     var lista = document.createElement('div');
     lista.classList.add("dropdown-menu");
     lista.setAttribute("aria-labelledby", "dropdown_target")
-    lista.setAttribute("aria-labelledby", "dropdownMenuButton")
-    lista.setAttribute("aria-labelledby", "dropdownMenuButton")
 
     //obtem os dados das categorias em json
     var categorias = await getCategorias();
